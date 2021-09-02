@@ -108,5 +108,14 @@ ORDER BY
 LIMIT 1;
 
 -- 3. ¿En qué día se han tenido mayor número de vuelos?
+SELECT
+    dia
+FROM
+    vuelos
+GROUP BY
+    dia
+ORDER BY
+    COUNT() DESC
+LIMIT 1;
 
 -- 4. ¿Cuáles son las aerolíneas que tienen mas de 2 vuelos por día?
