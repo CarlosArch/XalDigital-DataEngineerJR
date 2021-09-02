@@ -10,7 +10,7 @@ CREATE TABLE aerolineas (
 
 CREATE TABLE aeropuertos (
     id_aeropuerto    INT PRIMARY KEY
-   ,nombre_aerolinea TEXT
+   ,nombre_aeropuerto TEXT
 );
 
 CREATE TABLE movimientos (
@@ -40,7 +40,7 @@ INSERT INTO aerolineas (
 
 INSERT INTO aeropuertos (
     id_aeropuerto
-   ,nombre_aerolinea
+   ,nombre_aeropuerto
 ) VALUES
     (1 ,'Benito Juarez')
    ,(2 ,'Guanajuato'   )
@@ -72,3 +72,29 @@ INSERT INTO vuelos (
    ,(3 ,4 ,1 ,'2021-05-04')
    ,(3 ,4 ,1 ,'2021-05-04')
 ;
+
+-- SELECT * FROM aerolineas;
+-- SELECT * FROM aeropuertos;
+-- SELECT * FROM movimientos;
+-- SELECT * FROM vuelos;
+
+
+-- 1. ¿Cuál es el nombre aeropuerto que ha tenido mayor movimiento durante el año?
+SELECT
+    aeropuertos.nombre_aeropuerto
+FROM
+    vuelos
+LEFT JOIN
+    aeropuertos ON
+        vuelos.id_aeropuerto = aeropuertos.id_aeropuerto
+GROUP BY
+    vuelos.id_aeropuerto
+ORDER BY
+    COUNT() DESC
+LIMIT 1;
+
+-- 2. ¿Cuál es el nombre aerolínea que ha realizado mayor número de vuelos durante el año?
+
+-- 3. ¿En qué día se han tenido mayor número de vuelos?
+
+-- 4. ¿Cuáles son las aerolíneas que tienen mas de 2 vuelos por día?
