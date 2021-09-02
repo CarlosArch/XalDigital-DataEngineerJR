@@ -80,6 +80,17 @@ INSERT INTO vuelos (
 
 
 -- 1. ¿Cuál es el nombre aeropuerto que ha tenido mayor movimiento durante el año?
+WITH maximo(max) AS (
+    SELECT
+        COUNT()
+    FROM
+        vuelos
+    GROUP BY
+        vuelos.id_aeropuerto
+    ORDER BY
+        COUNT() DESC
+    LIMIT 1
+)
 SELECT
     aeropuertos.nombre_aeropuerto
 FROM
@@ -89,11 +100,37 @@ LEFT JOIN
         vuelos.id_aeropuerto = aeropuertos.id_aeropuerto
 GROUP BY
     vuelos.id_aeropuerto
-ORDER BY
-    COUNT() DESC
-LIMIT 1;
+HAVING
+    COUNT() = (SELECT max FROM maximo)
+;
+
+-- SOLUCIÓN ANTERIOR, sólo puede regresar 1 máximo, incluso si hay varios máximos
+-- Nota que en T-SQL, existe la cláusula "WITH TIES" que permite regresar todos los máximos
+-- SELECT
+--     aeropuertos.nombre_aeropuerto
+-- FROM
+--     vuelos
+-- LEFT JOIN
+--     aeropuertos ON
+--        vuelos.id_aeropuerto = aeropuertos.id_aeropuerto
+-- GROUP BY
+--     vuelos.id_aeropuerto
+-- ORDER BY
+--     COUNT() DESC
+-- LIMIT 1;
 
 -- 2. ¿Cuál es el nombre aerolínea que ha realizado mayor número de vuelos durante el año?
+WITH maximo(max) AS (
+    SELECT
+        COUNT()
+    FROM
+        vuelos
+    GROUP BY
+        vuelos.id_aerolinea
+    ORDER BY
+        COUNT() DESC
+    LIMIT 1
+)
 SELECT
     aerolineas.nombre_aerolinea
 FROM
@@ -103,11 +140,28 @@ LEFT JOIN
         vuelos.id_aerolinea = aerolineas.id_aerolinea
 GROUP BY
     vuelos.id_aerolinea
-ORDER BY
-    COUNT() DESC
-LIMIT 1;
+HAVING
+    COUNT() = (SELECT max FROM maximo)
+;
+
+-- SOLUCIÓN ANTERIOR, sólo puede regresar 1 máximo, incluso si hay varios máximos
+-- Nota que en T-SQL, existe la cláusula "WITH TIES" que permite regresar todos los máximos
+-- SELECT
+--     aerolineas.nombre_aerolinea
+-- FROM
+--     vuelos
+-- LEFT JOIN
+--     aerolineas ON
+--         vuelos.id_aerolinea = aerolineas.id_aerolinea
+-- GROUP BY
+--     vuelos.id_aerolinea
+-- ORDER BY
+--     COUNT() DESC
+-- LIMIT 1;
 
 -- 3. ¿En qué día se han tenido mayor número de vuelos?
+-- igual que los casos anteriores, sólo regresa 1 valor incluso si hubiesen varios días con
+-- máximo pero la misma solucion que antes podría ser aplicada.
 SELECT
     dia
 FROM
