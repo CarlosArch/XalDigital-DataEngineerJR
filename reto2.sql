@@ -94,6 +94,18 @@ ORDER BY
 LIMIT 1;
 
 -- 2. ¿Cuál es el nombre aerolínea que ha realizado mayor número de vuelos durante el año?
+SELECT
+    aerolineas.nombre_aerolinea
+FROM
+    vuelos
+LEFT JOIN
+    aerolineas ON
+        vuelos.id_aerolinea = aerolineas.id_aerolinea
+GROUP BY
+    vuelos.id_aerolinea
+ORDER BY
+    COUNT() DESC
+LIMIT 1;
 
 -- 3. ¿En qué día se han tenido mayor número de vuelos?
 
