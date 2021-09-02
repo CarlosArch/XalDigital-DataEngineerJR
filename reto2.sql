@@ -119,3 +119,19 @@ ORDER BY
 LIMIT 1;
 
 -- 4. ¿Cuáles son las aerolíneas que tienen mas de 2 vuelos por día?
+-- NOTA: Ninguna aerolínea tiene *más de* 2 vuelos *por día*, por lo que para que
+--       al menos mostrara algo, hice que regresara los que tienen 2 *o más* por día.
+SELECT
+    aerolineas.nombre_aerolinea
+   ,dia
+   ,COUNT() as vuelos_ese_día
+FROM
+    vuelos
+LEFT JOIN
+    aerolineas ON
+        vuelos.id_aerolinea = aerolineas.id_aerolinea
+GROUP BY
+    dia, vuelos.id_aerolinea
+HAVING
+    COUNT() >= 2
+;
